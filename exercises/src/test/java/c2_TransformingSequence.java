@@ -1,3 +1,6 @@
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -27,6 +30,7 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
     @Test
     public void transforming_sequence() {
         Flux<Integer> numbersFlux = numerical_service()
+                .map(t -> t + 1)
                 //todo change only this line
                 ;
 
@@ -48,7 +52,10 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
         Flux<Integer> numbersFlux = numerical_service_2();
 
         //todo: do your changes here
-        Flux<String> resultSequence = null;
+        Flux<String> resultSequence = numbersFlux.map(t -> {
+                return t > 0 ? ">" : 
+                                t == 0 ? "=" : "<";
+        });
 
         //don't change code below
         StepVerifier.create(resultSequence)
@@ -65,7 +72,7 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
     @Test
     public void cast() {
         Flux<String> numbersFlux = object_service()
-                .map(i -> (String) i); //todo: change this line only
+                .cast(String.class); //todo: change this line only
 
 
         StepVerifier.create(numbersFlux)
@@ -80,6 +87,7 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
     @Test
     public void maybe() {
         Mono<String> result = maybe_service()
+                .defaultIfEmpty("no results")
                 //todo: change this line only
                 ;
 
@@ -111,7 +119,7 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
     @Test
     public void sum_each_successive() {
         Flux<Integer> sumEach = numerical_service()
-                //todo: do your changes here
+                .map(t -> IntStream.rangeClosed(0, t).sum())//todo: do your changes here
                 ;
 
         StepVerifier.create(sumEach)
@@ -129,6 +137,8 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
     @Test
     public void sequence_starts_with_zero() {
         Flux<Integer> result = numerical_service()
+                .concatWith(Mono.just(0))
+                .sort()
                 //todo: change this line only
                 ;
 

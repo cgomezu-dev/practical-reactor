@@ -30,9 +30,7 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
     @Test
     public void transforming_sequence() {
         Flux<Integer> numbersFlux = numerical_service()
-                .map(t -> t + 1)
-                //todo change only this line
-                ;
+                .map(t -> t + 1);
 
         //StepVerifier is used for testing purposes
         //ignore it for now, or explore it independently
@@ -72,7 +70,7 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
     @Test
     public void cast() {
         Flux<String> numbersFlux = object_service()
-                .cast(String.class); //todo: change this line only
+                .cast(String.class); 
 
 
         StepVerifier.create(numbersFlux)
@@ -87,9 +85,7 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
     @Test
     public void maybe() {
         Mono<String> result = maybe_service()
-                .defaultIfEmpty("no results")
-                //todo: change this line only
-                ;
+                .defaultIfEmpty("no results");
 
         StepVerifier.create(result)
                     .expectNext("no results")
@@ -102,7 +98,6 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
      */
     @Test
     public void sequence_sum() {
-        //todo: change code as you need
         Mono<Integer> sum = null;
         numerical_service();
 
@@ -119,8 +114,7 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
     @Test
     public void sum_each_successive() {
         Flux<Integer> sumEach = numerical_service()
-                .map(t -> IntStream.rangeClosed(0, t).sum())//todo: do your changes here
-                ;
+                .map(t -> IntStream.rangeClosed(0, t).sum());
 
         StepVerifier.create(sumEach)
                     .expectNext(1, 3, 6, 10, 15, 21, 28, 36, 45, 55)
@@ -138,9 +132,7 @@ public class c2_TransformingSequence extends TransformingSequenceBase {
     public void sequence_starts_with_zero() {
         Flux<Integer> result = numerical_service()
                 .concatWith(Mono.just(0))
-                .sort()
-                //todo: change this line only
-                ;
+                .sort();
 
         StepVerifier.create(result)
                     .expectNext(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)

@@ -89,7 +89,7 @@ public class c1_Introduction extends IntroductionBase {
     public void multi_result_service() {
         Flux<String> serviceResult = multiResultService();
 
-        String result = serviceResult.blockFirst(); //todo: change this line only
+        String result = serviceResult.blockFirst();
 
         assertEquals("valid result", result);
     }
@@ -103,7 +103,7 @@ public class c1_Introduction extends IntroductionBase {
     public void fortune_top_five() {
         Flux<String> serviceResult = fortuneTop5();
 
-        List<String> results = serviceResult.collectList().block(); //todo: change this line only
+        List<String> results = serviceResult.collectList().block(); 
 
         assertEquals(Arrays.asList("Walmart", "Amazon", "Apple", "CVS Health", "UnitedHealth Group"), results);
         assertTrue(fortuneTop5ServiceIsCalled.get());
@@ -128,9 +128,7 @@ public class c1_Introduction extends IntroductionBase {
 
         serviceResult
                 .doOnNext(companyList::add)
-                .subscribe()
-        //todo: add an operator here, don't use any blocking operator!
-        ;
+                .subscribe();
 
         Thread.sleep(1000); //bonus: can you explain why this line is needed?
 
@@ -156,9 +154,7 @@ public class c1_Introduction extends IntroductionBase {
             .map(t -> companyList.add(t))
             .subscribe(t -> {
                 serviceCallCompleted.set(true);
-            })
-        //todo: change this line only
-        ;
+            });
 
         Thread.sleep(1000);
 

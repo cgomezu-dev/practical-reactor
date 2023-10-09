@@ -42,10 +42,9 @@ public class c3_FilteringSequence extends FilteringSequenceBase {
      */
     @Test
     public void needle_in_a_haystack() {
-        Flux<String> strings = null;
-                mashed_data_service()
-                        .filterWhen(t -> Mono.just(t instanceof String))
-                ;
+        Flux<String> strings = mashed_data_service()
+                        .filterWhen(t -> t instanceof String ? Mono.just(true) : Mono.just(false))
+                        .map(t -> (String) t);
 
         StepVerifier.create(strings)
                     .expectNext("1", "String.class")

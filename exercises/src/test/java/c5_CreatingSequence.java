@@ -52,7 +52,7 @@ public class c5_CreatingSequence {
     @Test
     public void potentially_null_mono() {
         String potentiallyNull = null;
-        Mono<String> potentiallyNullMono = Mono.just(potentiallyNull); 
+        Mono<String> potentiallyNullMono = Mono.justOrEmpty(potentiallyNull); 
 
         StepVerifier.create(potentiallyNullMono)
                     .verifyComplete();
